@@ -1,0 +1,86 @@
+%define git_date 20080716
+%define git_version 1337c65
+Name:		dbus-c++
+Version:	0.5.0
+Release:	0.3.%{git_date}git%{git_version}%{?dist}
+Summary:	Native C++ bindings for D-Bus
+
+Group:		System Environment/Libraries
+License:	LGPLv2+
+URL:		http://freedesktop.org/wiki/Software/dbus-c++
+# Generate tarball
+# git clone git://anongit.freedesktop.org/git/dbus/dbus-c++/
+# git-archive --format=tar --prefix=dbus-c++/ %{git_version} | bzip2 > dbus-c++-0.5.0.`date +%Y%m%d`git%{git_version}.tar.bz2
+Source0:	%{name}-%{version}.%{git_date}git%{git_version}.tar.bz2
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+
+BuildRequires:	dbus-devel
+BuildRequires:	glib2-devel
+Buildrequires:	gtkmm24-devel
+Buildrequires:	libtool
+BuildRequires:	expat-devel
+
+%description
+Native C++ bindings for D-Bus for use in C++ programs.
+
+%package	devel
+Summary:	Development files for %{name}
+Group:		Development/Libraries
+Requires:	%{name} = %{version}-%{release}
+Requires:	pkgconfig
+%description	devel
+The %{name}-devel package contains libraries and header files for
+developing applications that use %{name}.
+
+
+%prep
+%setup -q -n %{name}
+%{__sed} -i 's/\r//' AUTHORS
+%{__sed} -i 's/-O3//' configure.ac
+
+%build
+./autogen.sh
+export CPPFLAGS='%{optflags}'
+%configure --disable-static --enable-glib
+make %{?_smp_mflags}
+
+
+%install
+rm -rf $RPM_BUILD_ROOT
+make install DESTDIR=$RPM_BUILD_ROOT
+find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
+
+
+%clean
+rm -rf $RPM_BUILD_ROOT
+
+
+%post -p /sbin/ldconfig
+
+%postun -p /sbin/ldconfig
+
+
+%files
+%defattr(-,root,root,-)
+%doc COPYING AUTHORS
+%{_bindir}/dbusxx-introspect
+%{_bindir}/dbusxx-xml2cpp
+%{_libdir}/*.so.*
+
+%files devel
+%defattr(-,root,root,-)
+%doc TODO
+%{_includedir}/*
+%{_libdir}/*.so
+%{_libdir}/pkgconfig/*
+
+%changelog
+* Wed Jul 16 2008 Adel Gadllah <adel.gadllah@gmail.com> - 0.5.0-0.3.20080716git1337c65
+- Generate tarball with git-archive
+- Fix cflags
+
+* Wed Jul 16 2008 Adel Gadllah <adel.gadllah@gmail.com> - 0.5.0-0.2.20080716git1337c65
+- Add commit id to version
+
+* Wed Jul 16 2008 Adel Gadllah <adel.gadllah@gmail.com> - 0.5.0-0.1.20080716git
+- Initial package
