@@ -1,8 +1,8 @@
-%define git_date 20080716
-%define git_version 1337c65
+%define git_date 20090203
+%define git_version 13281b3
 Name:		dbus-c++
 Version:	0.5.0
-Release:	0.3.%{git_date}git%{git_version}%{?dist}
+Release:	0.4.%{git_date}git%{git_version}%{?dist}
 Summary:	Native C++ bindings for D-Bus
 
 Group:		System Environment/Libraries
@@ -75,6 +75,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/pkgconfig/*
 
 %changelog
+* Tue Feb 03 2009 Adel Gadllah <adel.gadllah@gmail.com> - 0.5.0-0.4.20090203git13281b3
+- Update to new git snapshot
+- Should fix RH #483418
+
 * Wed Jul 16 2008 Adel Gadllah <adel.gadllah@gmail.com> - 0.5.0-0.3.20080716git1337c65
 - Generate tarball with git-archive
 - Fix cflags
