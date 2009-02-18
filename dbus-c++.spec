@@ -39,6 +39,7 @@ developing applications that use %{name}.
 %setup -q -n %{name}
 %{__sed} -i 's/\r//' AUTHORS
 %{__sed} -i 's/-O3//' configure.ac
+%patch1 -p1 -b .uid
 
 %build
 ./autogen.sh
