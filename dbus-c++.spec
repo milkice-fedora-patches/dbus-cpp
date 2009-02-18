@@ -2,7 +2,7 @@
 %define git_version 13281b3
 Name:		dbus-c++
 Version:	0.5.0
-Release:	0.6.%{git_date}git%{git_version}%{?dist}
+Release:	0.7.%{git_date}git%{git_version}%{?dist}
 Summary:	Native C++ bindings for D-Bus
 
 Group:		System Environment/Libraries
@@ -80,6 +80,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/pkgconfig/*
 
 %changelog
+* Wed Feb 18 2009 Adel Gadllah <adel.gadllah@gmail.com> - 0.5.0-0.7.20090203git13281b3
+- bump..
+
 * Wed Feb 18 2009 Adel Gadllah <adel.gadllah@gmail.com> - 0.5.0-0.6.20090203git13281b3
 - Fix build with new gcc
 
