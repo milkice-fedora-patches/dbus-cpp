@@ -2,7 +2,7 @@
 %define git_version 13281b3
 Name:		dbus-c++
 Version:	0.5.0
-Release:	0.5.%{git_date}git%{git_version}%{?dist}
+Release:	0.6.%{git_date}git%{git_version}%{?dist}
 Summary:	Native C++ bindings for D-Bus
 
 Group:		System Environment/Libraries
@@ -15,6 +15,7 @@ Source0:	%{name}-%{version}.%{git_date}git%{git_version}.tar.bz2
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 Patch1:	dbus-c++-get-uid-api.patch
+Patch2: gcc-44.patch
 
 BuildRequires:	dbus-devel
 BuildRequires:	glib2-devel
@@ -39,6 +40,8 @@ developing applications that use %{name}.
 %setup -q -n %{name}
 %{__sed} -i 's/\r//' AUTHORS
 %{__sed} -i 's/-O3//' configure.ac
+%patch1 -p1 -b .uid
+%patch2 -p1 -b .gcc44
 
 %build
 ./autogen.sh
@@ -77,6 +80,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/pkgconfig/*
 
 %changelog
+* Wed Feb 18 2009 Adel Gadllah <adel.gadllah@gmail.com> - 0.5.0-0.6.20090203git13281b3
+- Fix build with new gcc
+
 * Wed Feb 18 2009 Adel Gadllah <adel.gadllah@gmail.com> - 0.5.0-0.5.20090203git13281b3
 - Add the ability to get the senders unix userid (Patch by Jiri Moskovcak)
 
