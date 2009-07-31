@@ -2,7 +2,7 @@
 %define git_version 13281b3
 Name:		dbus-c++
 Version:	0.5.0
-Release:	0.9.%{git_date}git%{git_version}%{?dist}
+Release:	0.10.%{git_date}git%{git_version}%{?dist}
 Summary:	Native C++ bindings for D-Bus
 
 Group:		System Environment/Libraries
@@ -16,6 +16,7 @@ BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 Patch1:	dbus-c++-get-uid-api.patch
 Patch2: gcc-44.patch
+Patch3: dbus-c++-build-fix.patch
 
 BuildRequires:	dbus-devel
 BuildRequires:	glib2-devel
@@ -42,6 +43,7 @@ developing applications that use %{name}.
 %{__sed} -i 's/-O3//' configure.ac
 %patch1 -p1 -b .uid
 %patch2 -p1 -b .gcc44
+%patch3 -p1 -b .buildfix
 
 %build
 ./autogen.sh
@@ -80,6 +82,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/pkgconfig/*
 
 %changelog
+* Fri Jul 31 2009 Adel Gadllah <adel.gadllah@gmail.com> - 0.5.0-0.10.20090203git13281b3
+- Fix build
+
 * Fri Jul 24 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.5.0-0.9.20090203git13281b3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_12_Mass_Rebuild
 
