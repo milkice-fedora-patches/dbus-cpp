@@ -2,7 +2,7 @@
 %define git_version 13281b3
 Name:		dbus-c++
 Version:	0.5.0
-Release:	0.10.%{git_date}git%{git_version}%{?dist}
+Release:	0.11.%{git_date}git%{git_version}%{?dist}
 Summary:	Native C++ bindings for D-Bus
 
 Group:		System Environment/Libraries
@@ -17,6 +17,7 @@ BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Patch1:	dbus-c++-get-uid-api.patch
 Patch2: gcc-44.patch
 Patch3: dbus-c++-build-fix.patch
+Patch4: dbus-c++-linkfix.patch
 
 BuildRequires:	dbus-devel
 BuildRequires:	glib2-devel
@@ -44,6 +45,7 @@ developing applications that use %{name}.
 %patch1 -p1 -b .uid
 %patch2 -p1 -b .gcc44
 %patch3 -p1 -b .buildfix
+%patch4 -p1 -b .linkfix
 
 %build
 ./autogen.sh
@@ -82,6 +84,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/pkgconfig/*
 
 %changelog
+* Sat Feb 13 2010 Adel Gadllah <adel.gadllah@gmail.com> - 0.5.0-0.11.20090203git13281b3
+- Fix FTBS (RH #565052)
+
 * Fri Jul 31 2009 Adel Gadllah <adel.gadllah@gmail.com> - 0.5.0-0.10.20090203git13281b3
 - Fix build
 
