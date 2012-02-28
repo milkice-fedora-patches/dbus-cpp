@@ -2,7 +2,7 @@
 %define git_version 13281b3
 Name:		dbus-c++
 Version:	0.5.0
-Release:	0.13.%{git_date}git%{git_version}%{?dist}
+Release:	0.14.%{git_date}git%{git_version}%{?dist}
 Summary:	Native C++ bindings for D-Bus
 
 Group:		System Environment/Libraries
@@ -84,6 +84,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/pkgconfig/*
 
 %changelog
+* Tue Feb 28 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.5.0-0.14.20090203git13281b3
+- Rebuilt for c++ ABI breakage
+
 * Fri Jan 13 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.5.0-0.13.20090203git13281b3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
 
