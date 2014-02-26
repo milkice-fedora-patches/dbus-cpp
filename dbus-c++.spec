@@ -1,6 +1,6 @@
 Name:           dbus-c++
 Version:        0.9.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Native C++ bindings for D-Bus
 
 Group:          System Environment/Libraries
@@ -35,6 +35,7 @@ developing applications that use %{name}.
 %prep
 %setup -q -n lib%{name}-%{version}
 %{__sed} -i 's/\r//' AUTHORS
+%{__sed} -i 's/libtoolize --force --copy/libtoolize -if --copy/' bootstrap
 %patch1 -p1 -b .gcc47
 %patch2 -p1 -b .linkfix
 
@@ -66,6 +67,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/*
 
 %changelog
+* Wed Feb 26 2014 Jiri Popelka <jpopelka@redhat.com> - 0.9.0-2
+- fix bootstrap script for ppc64le (#1070306)
+
 * Tue Dec 17 2013 Jiri Popelka <jpopelka@redhat.com> - 0.9.0-1
 - 0.9.0
 
