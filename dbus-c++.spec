@@ -1,6 +1,6 @@
 Name:           dbus-c++
 Version:        0.9.0
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        Native C++ bindings for D-Bus
 
 Group:          System Environment/Libraries
@@ -10,6 +10,9 @@ Source0:        http://downloads.sourceforge.net/dbus-cplusplus/lib%{name}-%{ver
 
 Patch1: dbus-c++-gcc4.7.patch
 Patch2: dbus-c++-linkfix.patch
+# Fix collision between macro bind_property in dbus-c++/interface.h and method
+# bind_property in glibmm/binding.h
+Patch3: dbus-c++-macro_collision.patch
 
 BuildRequires: dbus-devel
 BuildRequires: glib2-devel
@@ -38,6 +41,7 @@ developing applications that use %{name}.
 %{__sed} -i 's/libtoolize --force --copy/libtoolize -if --copy/' bootstrap
 %patch1 -p1 -b .gcc47
 %patch2 -p1 -b .linkfix
+%patch3 -p1 -b .collision
 
 %build
 ./autogen.sh
@@ -67,6 +71,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/*
 
 %changelog
+* Thu Mar 05 2015 Sandro Mani <manisandro@gmail.com> - 0.9.0-6
+- Add patch to fix macro macro collision (#1187045)
+
 * Fri Feb 27 2015 Adel Gadllah <adel.gadllah@gmail.com> - 0.9.0-5
 - Rebuilt with gcc5
 
