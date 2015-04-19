@@ -1,6 +1,6 @@
 Name:           dbus-c++
 Version:        0.9.0
-Release:        6%{?dist}
+Release:        7%{?dist}
 Summary:        Native C++ bindings for D-Bus
 
 Group:          System Environment/Libraries
@@ -71,6 +71,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/*
 
 %changelog
+* Sun Apr 19 2015 Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl> - 0.9.0-7
+- Rebuilt with gcc5 once again
+
 * Thu Mar 05 2015 Sandro Mani <manisandro@gmail.com> - 0.9.0-6
 - Add patch to fix macro macro collision (#1187045)
 
