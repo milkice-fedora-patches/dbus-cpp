@@ -1,12 +1,12 @@
-Name:           dbus-c++
-Version:        0.9.0
-Release:        7%{?dist}
-Summary:        Native C++ bindings for D-Bus
+Name:          dbus-c++
+Version:       0.9.0
+Release:       7%{?dist}
+Summary:       Native C++ bindings for D-Bus
 
-Group:          System Environment/Libraries
-License:        LGPLv2+
-URL:            http://sourceforge.net/projects/dbus-cplusplus/
-Source0:        http://downloads.sourceforge.net/dbus-cplusplus/lib%{name}-%{version}.tar.gz
+Group:         System Environment/Libraries
+License:       LGPLv2+
+URL:           http://sourceforge.net/projects/dbus-cplusplus/
+Source0:       http://downloads.sourceforge.net/dbus-cplusplus/lib%{name}-%{version}.tar.gz
 
 Patch1: dbus-c++-gcc4.7.patch
 Patch2: dbus-c++-linkfix.patch
@@ -25,20 +25,34 @@ BuildRequires: ecore-devel
 dbus-c++ attempts to provide a C++ API for D-Bus.
 The library has a glib/gtk and an Ecore mainloop integration.
 
-%package        devel
-Summary:        Development files for %{name}
-Group:          Development/Libraries
-Requires:       %{name}%{?_isa} = %{version}-%{release}
-Requires:       pkgconfig
-%description    devel
+%package       ecore
+Summary:       Ecore library for %{name}
+Group:         System Environment/Libraries
+Requires:      %{name}%{?_isa} = %{version}-%{release}
+%description   ecore
+This package contains the ecore mainloop library for %{name}
+
+%package       glib
+Summary:       GLib library for %{name}
+Group:         System Environment/Libraries
+Requires:      %{name}%{?_isa} = %{version}-%{release}
+%description   glib
+This package contains the GLib mainloop library for %{name}
+
+%package       devel
+Summary:       Development files for %{name}
+Group:         Development/Libraries
+Requires:      %{name}%{?_isa} = %{version}-%{release}
+Requires:      pkgconfig
+%description   devel
 This package contains libraries and header files for
 developing applications that use %{name}.
 
 
 %prep
 %setup -q -n lib%{name}-%{version}
-%{__sed} -i 's/\r//' AUTHORS
-%{__sed} -i 's/libtoolize --force --copy/libtoolize -if --copy/' bootstrap
+sed -i 's/\r//' AUTHORS
+sed -i 's/libtoolize --force --copy/libtoolize -if --copy/' bootstrap
 %patch1 -p1 -b .gcc47
 %patch2 -p1 -b .linkfix
 %patch3 -p1 -b .collision
@@ -59,10 +73,18 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %files
-%doc COPYING AUTHORS
+%{!?_licensedir:%global license %%doc}
+%license COPYING
+%doc AUTHORS
 %{_bindir}/dbusxx-introspect
 %{_bindir}/dbusxx-xml2cpp
-%{_libdir}/*.so.*
+%{_libdir}/libdbus-c++-1.so.0*
+
+%files ecore
+%{_libdir}/libdbus-c++-ecore-1.so.0*
+
+%files glib
+%{_libdir}/libdbus-c++-glib-1.so.0*
 
 %files devel
 %doc TODO
@@ -71,6 +93,10 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/*
 
 %changelog
+* Thu May  7 2015 Peter Robinson <pbrobinson@fedoraproject.org> 0.9.0-8
+- Split ecore/glib mainloop out to subpackage to reduce deps
+- Use %%license
+
 * Sun Apr 19 2015 Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl> - 0.9.0-7
 - Rebuilt with gcc5 once again
 
