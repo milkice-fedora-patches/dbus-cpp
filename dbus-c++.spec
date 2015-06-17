@@ -1,6 +1,6 @@
 Name:          dbus-c++
 Version:       0.9.0
-Release:       8%{?dist}
+Release:       9%{?dist}
 Summary:       Native C++ bindings for D-Bus
 
 Group:         System Environment/Libraries
@@ -93,6 +93,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/*
 
 %changelog
+* Wed Jun 17 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.9.0-9
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
+
 * Thu May  7 2015 Peter Robinson <pbrobinson@fedoraproject.org> 0.9.0-8
 - Split ecore/glib mainloop out to subpackage to reduce deps
 - Use %%license
