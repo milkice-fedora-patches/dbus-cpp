@@ -1,6 +1,6 @@
 Name:          dbus-c++
 Version:       0.9.0
-Release:       9%{?dist}
+Release:       10%{?dist}
 Summary:       Native C++ bindings for D-Bus
 
 Group:         System Environment/Libraries
@@ -59,7 +59,7 @@ sed -i 's/libtoolize --force --copy/libtoolize -if --copy/' bootstrap
 
 %build
 ./autogen.sh
-export CPPFLAGS='%{optflags}'
+export CPPFLAGS='%{optflags}' CXXFLAGS='--std=gnu++11 %{optflags}'
 %configure --disable-static --disable-tests
 make %{?_smp_mflags}
 
@@ -93,6 +93,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/*
 
 %changelog
+* Thu Jan 14 2016 Lubomir Rintel <lkundrak@v3.sk> - 0.9.0-10
+- Fix FTBFS
+
 * Wed Jun 17 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.9.0-9
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
 
