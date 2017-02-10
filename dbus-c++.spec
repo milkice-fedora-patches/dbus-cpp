@@ -1,6 +1,6 @@
 Name:          dbus-c++
 Version:       0.9.0
-Release:       11%{?dist}
+Release:       12%{?dist}
 Summary:       Native C++ bindings for D-Bus
 
 Group:         System Environment/Libraries
@@ -93,6 +93,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/*
 
 %changelog
+* Fri Feb 10 2017 Fedora Release Engineering <releng@fedoraproject.org> - 0.9.0-12
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
+
 * Wed Feb 03 2016 Fedora Release Engineering <releng@fedoraproject.org> - 0.9.0-11
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
 
