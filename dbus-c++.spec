@@ -16,6 +16,8 @@ Patch3: dbus-c++-macro_collision.patch
 # Remove broken classes for multithreading support
 # https://sourceforge.net/p/dbus-cplusplus/patches/18/
 Patch4: dbus-c++-threading.patch
+# https://sourceforge.net/p/dbus-cplusplus/patches/19/
+Patch5: dbus-c++-writechar.patch
 
 BuildRequires: dbus-devel
 BuildRequires: glib2-devel
@@ -60,6 +62,7 @@ sed -i 's/libtoolize --force --copy/libtoolize -if --copy/' bootstrap
 %patch2 -p1 -b .linkfix
 %patch3 -p1 -b .collision
 %patch4 -p1 -b .threading
+%patch5 -p1 -b .writechar
 
 %build
 ./autogen.sh
