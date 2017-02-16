@@ -1,6 +1,6 @@
 Name:          dbus-c++
 Version:       0.9.0
-Release:       12%{?dist}
+Release:       13%{?dist}
 Summary:       Native C++ bindings for D-Bus
 
 Group:         System Environment/Libraries
@@ -13,6 +13,9 @@ Patch2: dbus-c++-linkfix.patch
 # Fix collision between macro bind_property in dbus-c++/interface.h and method
 # bind_property in glibmm/binding.h
 Patch3: dbus-c++-macro_collision.patch
+# Remove broken classes for multithreading support
+# https://sourceforge.net/p/dbus-cplusplus/patches/18/
+Patch4: dbus-c++-threading.patch
 
 BuildRequires: dbus-devel
 BuildRequires: glib2-devel
@@ -56,6 +59,7 @@ sed -i 's/libtoolize --force --copy/libtoolize -if --copy/' bootstrap
 %patch1 -p1 -b .gcc47
 %patch2 -p1 -b .linkfix
 %patch3 -p1 -b .collision
+%patch4 -p1 -b .threading
 
 %build
 ./autogen.sh
@@ -93,6 +97,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/*
 
 %changelog
+* Thu Feb 16 2017 Jonathan Wakely <jwakely@redhat.com> - 0.9.0-13
+- Remove broken multi-threading support that doesn't build with GCC 7
+
 * Fri Feb 10 2017 Fedora Release Engineering <releng@fedoraproject.org> - 0.9.0-12
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
 
