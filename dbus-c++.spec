@@ -1,3 +1,5 @@
+%bcond_without ecore
+
 Name:          dbus-c++
 Version:       0.9.0
 Release:       16%{?dist}
@@ -24,18 +26,22 @@ BuildRequires: glib2-devel
 BuildRequires: gtkmm24-devel
 BuildRequires: autoconf automake libtool
 BuildRequires: expat-devel
+%if %{with ecore}
 BuildRequires: ecore-devel
+%endif
 
 %description
 dbus-c++ attempts to provide a C++ API for D-Bus.
-The library has a glib/gtk and an Ecore mainloop integration.
+Subpackages are provided with mainloop integration.
 
+%if %{with ecore}
 %package       ecore
 Summary:       Ecore library for %{name}
 Group:         System Environment/Libraries
 Requires:      %{name}%{?_isa} = %{version}-%{release}
 %description   ecore
 This package contains the ecore mainloop library for %{name}
+%endif
 
 %package       glib
 Summary:       GLib library for %{name}
@@ -65,9 +71,12 @@ sed -i 's/libtoolize --force --copy/libtoolize -if --copy/' bootstrap
 %patch5 -p1 -b .writechar
 
 %build
-./autogen.sh
+autoreconf -vfi
 export CPPFLAGS='%{optflags}' CXXFLAGS='--std=gnu++11 %{optflags}'
-%configure --disable-static --disable-tests
+%configure --disable-static --disable-tests \
+%if %{without ecore}
+           --disable-ecore
+%endif
 make %{?_smp_mflags}
 
 %install
@@ -87,8 +96,10 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_bindir}/dbusxx-xml2cpp
 %{_libdir}/libdbus-c++-1.so.0*
 
+%if %{with ecore}
 %files ecore
 %{_libdir}/libdbus-c++-ecore-1.so.0*
+%endif
 
 %files glib
 %{_libdir}/libdbus-c++-glib-1.so.0*
