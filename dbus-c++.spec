@@ -21,6 +21,8 @@ Patch4: dbus-c++-threading.patch
 # https://sourceforge.net/p/dbus-cplusplus/patches/19/
 Patch5: dbus-c++-writechar.patch
 
+BuildRequires:  gcc
+BuildRequires:  gcc-c++
 BuildRequires: dbus-devel
 BuildRequires: glib2-devel
 BuildRequires: gtkmm24-devel
@@ -76,20 +78,19 @@ export CPPFLAGS='%{optflags}' CXXFLAGS='--std=gnu++11 %{optflags}'
 %configure --disable-static --disable-tests \
 %if %{without ecore}
            --disable-ecore
+%else
+  ;
 %endif
-make %{?_smp_mflags}
+%make_build
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
-find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
+%make_install
+find $RPM_BUILD_ROOT -name '*.la' -print -delete
 
-%post -p /sbin/ldconfig
-
-%postun -p /sbin/ldconfig
+%ldconfig_scriptlets
 
 
 %files
-%{!?_licensedir:%global license %%doc}
 %license COPYING
 %doc AUTHORS
 %{_bindir}/dbusxx-introspect
