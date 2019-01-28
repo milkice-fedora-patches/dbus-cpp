@@ -5,7 +5,6 @@ Version:       0.9.0
 Release:       19%{?dist}
 Summary:       Native C++ bindings for D-Bus
 
-Group:         System Environment/Libraries
 License:       LGPLv2+
 URL:           http://sourceforge.net/projects/dbus-cplusplus/
 Source0:       http://downloads.sourceforge.net/dbus-cplusplus/lib%{name}-%{version}.tar.gz
@@ -39,7 +38,6 @@ Subpackages are provided with mainloop integration.
 %if %{with ecore}
 %package       ecore
 Summary:       Ecore library for %{name}
-Group:         System Environment/Libraries
 Requires:      %{name}%{?_isa} = %{version}-%{release}
 %description   ecore
 This package contains the ecore mainloop library for %{name}
@@ -47,14 +45,12 @@ This package contains the ecore mainloop library for %{name}
 
 %package       glib
 Summary:       GLib library for %{name}
-Group:         System Environment/Libraries
 Requires:      %{name}%{?_isa} = %{version}-%{release}
 %description   glib
 This package contains the GLib mainloop library for %{name}
 
 %package       devel
 Summary:       Development files for %{name}
-Group:         Development/Libraries
 Requires:      %{name}%{?_isa} = %{version}-%{release}
 Requires:      pkgconfig
 %description   devel
