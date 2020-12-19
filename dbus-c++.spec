@@ -30,6 +30,7 @@ BuildRequires: expat-devel
 %if %{with ecore}
 BuildRequires: ecore-devel
 %endif
+BuildRequires: make
 
 %description
 dbus-c++ attempts to provide a C++ API for D-Bus.
