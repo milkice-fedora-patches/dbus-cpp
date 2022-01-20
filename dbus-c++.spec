@@ -2,7 +2,7 @@
 
 Name:          dbus-c++
 Version:       0.9.0
-Release:       25%{?dist}
+Release:       26%{?dist}
 Summary:       Native C++ bindings for D-Bus
 
 License:       LGPLv2+
@@ -109,6 +109,9 @@ find $RPM_BUILD_ROOT -name '*.la' -print -delete
 %{_libdir}/pkgconfig/*
 
 %changelog
+* Thu Jan 20 2022 Fedora Release Engineering <releng@fedoraproject.org> - 0.9.0-26
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_36_Mass_Rebuild
+
 * Wed Jul 21 2021 Fedora Release Engineering <releng@fedoraproject.org> - 0.9.0-25
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_35_Mass_Rebuild
 
