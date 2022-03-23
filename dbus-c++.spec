@@ -2,7 +2,7 @@
 
 Name:          dbus-c++
 Version:       0.9.0
-Release:       26%{?dist}
+Release:       27%{?dist}
 Summary:       Native C++ bindings for D-Bus
 
 License:       LGPLv2+
@@ -19,6 +19,9 @@ Patch3: dbus-c++-macro_collision.patch
 Patch4: dbus-c++-threading.patch
 # https://sourceforge.net/p/dbus-cplusplus/patches/19/
 Patch5: dbus-c++-writechar.patch
+# Fix template/operator issues
+# https://github.com/pkgw/dbus-cplusplus/commit/a0b9ef3b469ca23c6a3229d8abb967cbbddcee38
+Patch6: dbus-c++-template-operators.patch
 
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
@@ -68,6 +71,7 @@ sed -i 's/libtoolize --force --copy/libtoolize -if --copy/' bootstrap
 %patch3 -p1 -b .collision
 %patch4 -p1 -b .threading
 %patch5 -p1 -b .writechar
+%patch6 -p1 -b .template-operators
 
 %build
 autoreconf -vfi
@@ -109,6 +113,9 @@ find $RPM_BUILD_ROOT -name '*.la' -print -delete
 %{_libdir}/pkgconfig/*
 
 %changelog
+* Wed Mar 23 2022 Nils Philippsen <nils@tiptoe.de> - 0.9.0-27
+- Fix FTBFS on Fedora >= 36 (#2045301)
+
 * Thu Jan 20 2022 Fedora Release Engineering <releng@fedoraproject.org> - 0.9.0-26
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_36_Mass_Rebuild
 
