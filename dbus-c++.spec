@@ -1,8 +1,12 @@
+%ifnarch riscv64
 %bcond_without ecore
+%else
+%bcond_with ecore
+%endif
 
 Name:          dbus-c++
 Version:       0.9.0
-Release:       27%{?dist}
+Release:       28%{?dist}
 Summary:       Native C++ bindings for D-Bus
 
 License:       LGPLv2+
@@ -113,6 +117,10 @@ find $RPM_BUILD_ROOT -name '*.la' -print -delete
 %{_libdir}/pkgconfig/*
 
 %changelog
+* Sat Apr 16 2022 Milkice Qiu <milkice@milkice.me> - 0.9.0-28
+- Disable ecore on riscv64
+- Patch from David Abdurachmanov <david.abdurachmanov@gmail.com>
+
 * Wed Mar 23 2022 Nils Philippsen <nils@tiptoe.de> - 0.9.0-27
 - Fix FTBFS on Fedora >= 36 (#2045301)
 
